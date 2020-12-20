@@ -6,7 +6,7 @@ import java.net.InetAddress;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import assets.TrafficLight;
+import common.TrafficLight;
 
 public class Client extends Networkable {
 
@@ -69,7 +69,6 @@ public class Client extends Networkable {
 			byte[] data = serialize(obj);
 			DatagramPacket p = new DatagramPacket(data, data.length, this.ip, this.port);
 			socket.send(p);
-//			System.out.println("Port:" + p.getPort() + "\nData:" + deserializePacket(p));
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -79,13 +78,13 @@ public class Client extends Networkable {
 		Timer timer = new Timer(); //appropriate timer usage
 		timer.scheduleAtFixedRate(new TimerTask() {
 			public void run() {
-				connectedTime += 100;
+				connectedTime += 1000;
 				if (connectedTime % Parameters.CHANGE_INTERVAL == 0) {
 					trafficLight.nextState();
 //					ServerWindow.server.
 				}
 			}
-		}, 0, 100);
+		}, 0, 1000);
 	}
 
 	@Override

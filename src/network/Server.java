@@ -8,7 +8,7 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 
-import assets.TrafficLight;
+import common.TrafficLight;
 
 public class Server extends Networkable {
 	public List<Client> clientList = new ArrayList<Client>();
@@ -43,7 +43,7 @@ public class Server extends Networkable {
 						socket.receive(packet);
 						onPacketReceived(packet);
 					} catch (IOException ex) {
-						System.out.println(ex.getMessage());
+						ex.printStackTrace();
 					}
 				}
 			}
@@ -72,7 +72,6 @@ public class Server extends Networkable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("hi");
 	}
 
 }

@@ -20,7 +20,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 
-import assets.ClientTableModel;
+import common.ClientTableModel;
 import network.Client;
 import network.Parameters;
 import network.Server;

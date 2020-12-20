@@ -20,9 +20,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import assets.TrafficLight;
+import common.TrafficLight;
+import common.TrafficLightVisualizer;
 import network.Client;
-import network.Parameters;
 
 public class ClientWindow extends commonWindow {
 	TrafficLight tLight = new TrafficLight();
@@ -33,9 +33,10 @@ public class ClientWindow extends commonWindow {
 		Timer updater = new Timer(); //THIS IS WRONG!! I CANT IMPLEMENT A TABLE LISTENER (HELP) SO IM WORKING AROUND
 		updater.scheduleAtFixedRate(new TimerTask() {
 			public void run() {
-				lbltLight.setText(client.gettrafficLight().toString());
+				lbltLight.setText("");
+				lbltLight.setIcon(TrafficLightVisualizer.visualize(client.gettrafficLight()));
 			}
-		}, 0, Parameters.REFRESH_RATE);
+		}, 0, 500);
 	}
 
 	public ClientWindow() throws UnknownHostException {
@@ -90,7 +91,8 @@ public class ClientWindow extends commonWindow {
 			}
 		});
 
-		lbltLight = new JLabel(tLight.toString()); //t
+//		lbltLight = new JLabel(tLight.toString()); //t
+		lbltLight = new JLabel("Disconnected"); //t
 		lbltLight.setForeground(Color.WHITE);
 		lbltLight.setFont(new Font("Lato", Font.BOLD, 24));
 		GridBagConstraints gbc_lblGroup = new GridBagConstraints();
