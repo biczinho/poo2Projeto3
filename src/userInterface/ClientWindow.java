@@ -3,7 +3,6 @@ package userInterface;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -24,11 +23,28 @@ import common.TrafficLight;
 import common.TrafficLightVisualizer;
 import network.Client;
 
+/**
+ * @author Gabriel
+ * @since November 20th {@summary } Client graphic interface definition, extends {@link userInterface.commonWindow} to
+ *        implement Client specific elements.
+ */
 public class ClientWindow extends commonWindow {
+	/**
+	 * {@summary } Attribute instance of {@link common.TrafficLight }.
+	 */
 	TrafficLight tLight = new TrafficLight();
+	/**
+	 * {@summary } Attribute instance of {@link network.Client }.
+	 */
 	Client client;
+	/**
+	 * {@summary } Label used to visualize TrafficLight both as text or Icon.
+	 */
 	JLabel lbltLight;
 
+	/**
+	 * {@summary } Regularly updates lbltlight Attribute. Sub-optimal solution, to say at least.
+	 */
 	private void turnUpdaterOn() {
 		Timer updater = new Timer(); //THIS IS WRONG!! I CANT IMPLEMENT A TABLE LISTENER (HELP) SO IM WORKING AROUND
 		updater.scheduleAtFixedRate(new TimerTask() {
@@ -39,15 +55,23 @@ public class ClientWindow extends commonWindow {
 		}, 0, 500);
 	}
 
+	/**
+	 * {@summary } Default constructor calls inherited default constructor, initializes Client object and starts its packet
+	 * listener.
+	 * 
+	 * @throws UnknownHostException : Obligatory from Client instantiation.
+	 */
 	public ClientWindow() throws UnknownHostException {
 		super();
-		frmMain.setPreferredSize(new Dimension(600, 600));
 		frmMain.setTitle("Client");
 		client = new Client(InetAddress.getLocalHost(), 9876, tLight, 0);
 		client.turnPacketListenerOn();
 		init();
 	}
 
+	/**
+	 * {@summary } Initialize the contents of the frame.
+	 */
 	public void init() {
 		pnlRight.setBackground(new Color(0x161616));
 		GridBagConstraints gbc_pnlRight = new GridBagConstraints();
@@ -72,7 +96,7 @@ public class ClientWindow extends commonWindow {
 		gbl_pnlInput.rowWeights = new double[] { 0.0, 0.0, Double.MIN_VALUE };
 		pnlInput.setLayout(gbl_pnlInput);
 
-		JButton btnInsert = new JButton("Insert"); //t
+		JButton btnInsert = new JButton("Connect"); //t
 		btnInsert.setAlignmentX(Component.CENTER_ALIGNMENT);
 		btnInsert.setForeground(Color.WHITE);
 		btnInsert.setBackground(new Color(0x2CB67D));
@@ -81,7 +105,7 @@ public class ClientWindow extends commonWindow {
 		GridBagConstraints gbc_btnCalc = new GridBagConstraints();
 		gbc_btnCalc.fill = GridBagConstraints.BOTH;
 		gbc_btnCalc.insets = new Insets(0, 0, 0, 5);
-		gbc_btnCalc.gridx = 2;
+		gbc_btnCalc.gridx = 0;
 		gbc_btnCalc.gridy = 0;
 		pnlInput.add(btnInsert, gbc_btnCalc);
 		btnInsert.addActionListener(new ActionListener() {
@@ -91,7 +115,6 @@ public class ClientWindow extends commonWindow {
 			}
 		});
 
-//		lbltLight = new JLabel(tLight.toString()); //t
 		lbltLight = new JLabel("Disconnected"); //t
 		lbltLight.setForeground(Color.WHITE);
 		lbltLight.setFont(new Font("Lato", Font.BOLD, 24));
@@ -100,7 +123,6 @@ public class ClientWindow extends commonWindow {
 		gbc_lblGroup.insets = new Insets(0, 10, 0, 0);
 		gbc_lblGroup.gridx = 0;
 		gbc_lblGroup.gridy = 0;
-//		pnlInput.add(lbltLight, gbc_lblGroup);
 		pnlRightFix.add(lbltLight, gbc_lblGroup);
 	}
 

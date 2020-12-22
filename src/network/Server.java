@@ -10,10 +10,25 @@ import java.util.List;
 
 import common.TrafficLight;
 
+/**
+ * @author Gabriel
+ * @since November 20th
+ * @version 1.3 {@summary } Server class definition. Responsible for information about Server hosting and communication with
+ *          clients. Extends {@link Networkable} to overload packet related methods.
+ */
 public class Server extends Networkable {
+	/**
+	 * {@summary } Attribute to keep track of connected clients.
+	 */
 	public List<Client> clientList = new ArrayList<Client>();
+	/**
+	 * {@summary } Attribute used to establish UDP based communication.
+	 */
 	public DatagramSocket socket;
 
+	/**
+	 * {@summary } Default Constructor instantiate socket and opens socket with a port.
+	 */
 	public Server() {
 		super();
 		try {
@@ -24,14 +39,11 @@ public class Server extends Networkable {
 		}
 	}
 
-	public List<Integer> getClientsPorts() {
-		List<Integer> ports = new ArrayList<Integer>();
-		for (Client c : clientList) {
-			ports.add(c.getPort());
-		}
-		return ports;
-	}
-
+	/**
+	 * {@summary } Overriding packet Listener, not sure why, doesnt work otherwise.
+	 * 
+	 */
+	@Override
 	public void turnPacketListenerOn() {
 		Thread listenerThread = new Thread(new Runnable() {
 			public void run() {
@@ -51,6 +63,12 @@ public class Server extends Networkable {
 		listenerThread.start();
 	}
 
+	/**
+	 * {@summary } Overloaded sendPacket Method to implement packet sending by Client parameter. Reads Client's TrafficLight,
+	 * serializes and send.
+	 * 
+	 * @param client : Client which TrafficLight is sent.
+	 */
 	public void sendPacket(Client client) {
 		try {
 			byte[] data = serialize(client.gettrafficLight());
@@ -62,6 +80,12 @@ public class Server extends Networkable {
 
 	}
 
+	/**
+	 * {@summary } Overriding default listener to implement Servers specific behaviour. Adds new Client to clientList attribute
+	 * and starts its monitoring Method.
+	 * 
+	 * @param packet : read its port and deserializes its data.
+	 */
 	@Override
 	protected void onPacketReceived(DatagramPacket packet) {
 		try {

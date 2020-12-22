@@ -1,5 +1,10 @@
 package network;
 
+/**
+ * @author Gabriel
+ * @since November 20th
+ * @version 1.3 {@summary } External Parameterizing
+ */
 public class Parameters {
 	public static final int REFRESH_RATE = 1000; //milliseconds between each redraw 
 	public static final int MAX_BUFFER_SIZE = 65000; //maximum bytes per datagrampacket

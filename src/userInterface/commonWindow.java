@@ -11,6 +11,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -19,8 +20,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+/**
+ * @author Gabriel
+ * @since November 20th {@summary } Abstract graphic interface definition, reused from previous projects.
+ */
 public abstract class commonWindow {
 	public JFrame frmMain;
 	public JPanel pnlRight;
@@ -38,8 +44,10 @@ public abstract class commonWindow {
 	 */
 	private void initialize() {
 		frmMain = new JFrame();
-//		frmMain.setVisible(true);
-//		frmMain.setResizable(false);
+		frmMain.setSize((int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.55),
+				(int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.45));
+		frmMain.setLocationRelativeTo(null);
+		frmMain.setResizable(false);
 		frmMain.getContentPane().setBackground(new Color(0x161616));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 367, 487, 0 };
@@ -47,7 +55,6 @@ public abstract class commonWindow {
 		gridBagLayout.columnWeights = new double[] { 1.0, 0.0, Double.MIN_VALUE };
 		gridBagLayout.rowWeights = new double[] { 0.0, Double.MIN_VALUE };
 		frmMain.getContentPane().setLayout(gridBagLayout);
-//		frmMain.setPreferredSize(new Dimension(600, 600));
 
 		pnlRight = new JPanel();
 		pnlRight.setBackground(new Color(0x161616));
@@ -66,7 +73,7 @@ public abstract class commonWindow {
 		pnlLeft.setBackground(new Color(0x7F5AF0));
 		GridBagConstraints gbc_pnlLeft = new GridBagConstraints();
 		gbc_pnlLeft.fill = GridBagConstraints.BOTH;
-		gbc_pnlLeft.insets = new Insets(0, 0, 0, 5);
+		gbc_pnlLeft.insets = new Insets(0, 0, 0, 7);
 		gbc_pnlLeft.gridx = 0;
 		gbc_pnlLeft.gridy = 0;
 		frmMain.getContentPane().add(pnlLeft, gbc_pnlLeft);
@@ -76,7 +83,7 @@ public abstract class commonWindow {
 		pnlMenu.setBackground(new Color(0x7F5AF0));
 		pnlLeft.add(pnlMenu);
 		GridBagLayout gbl_pnlMenu = new GridBagLayout();
-		gbl_pnlMenu.columnWidths = new int[] { 299, 0 };
+		gbl_pnlMenu.columnWidths = new int[] { 500, 0 };
 		gbl_pnlMenu.rowHeights = new int[] { 22, 0 };
 		gbl_pnlMenu.columnWeights = new double[] { 0.0, Double.MIN_VALUE };
 		gbl_pnlMenu.rowWeights = new double[] { 0.0, Double.MIN_VALUE };
@@ -109,7 +116,8 @@ public abstract class commonWindow {
 		menuBar.add(menuHelp);
 		menuHelp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-//				MENU BAR HELP EVENT	
+				JOptionPane.showMessageDialog(null,
+						"Client\n\tLabel shows current Traffic Light. If it shows \"Disconnected\" that means Client is not currently connected to a server.\n\tButton \"Connect\" establish connection with Server.  \nServer\n\tTable shows all current connected clients: Their IP, Port, Traffic Light visualization and Connected Time (ms).");
 			}
 		});
 
@@ -121,7 +129,9 @@ public abstract class commonWindow {
 		menuBar.add(menuAbout);
 		menuAbout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-//				MENU BAR ABOUT EVENT
+				JOptionPane.showMessageDialog(null,
+						"This program was written by group B6 of the SI400 discipline of the Information Systems course at Unicamp to showcase Client and Server communication with Object transmition, using UDP protocol.");
+
 			}
 		});
 
@@ -145,7 +155,7 @@ public abstract class commonWindow {
 		gbc_lblGroup.gridy = 0;
 		pnlTitle.add(lblGroup, gbc_lblGroup);
 
-		JLabel lblTitle = new JLabel("Traffic Light Monitor"); //t
+		JLabel lblTitle = new JLabel("Traffic Light"); //t
 		lblTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
 		lblTitle.setForeground(new Color(0x161616));
 		lblTitle.setFont(new Font("Lato", Font.BOLD, 24));
@@ -156,16 +166,25 @@ public abstract class commonWindow {
 		gbc_lblTitle.gridy = 1;
 		pnlTitle.add(lblTitle, gbc_lblTitle);
 
+		JLabel lblTitle2 = new JLabel("Monitor"); //t
+		lblTitle2.setAlignmentX(Component.CENTER_ALIGNMENT);
+		lblTitle2.setForeground(new Color(0x161616));
+		lblTitle2.setFont(new Font("Lato", Font.BOLD, 24));
+		GridBagConstraints gbc_lblTitle2 = new GridBagConstraints();
+		gbc_lblTitle.insets = new Insets(0, 10, 0, 0);
+		gbc_lblTitle.fill = GridBagConstraints.BOTH;
+		gbc_lblTitle.gridx = 0;
+		gbc_lblTitle.gridy = 2;
+		pnlTitle.add(lblTitle2, gbc_lblTitle);
+
 		JPanel panel_4 = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panel_4.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		panel_4.setBackground(new Color(0x7F5AF0));
 		pnlLeft.add(panel_4);
 
-		JLabel lblLogo = new JLabel(new ImageIcon(commonWindow.class.getResource("/assets/uniLogo.png")));
+		JLabel lblLogo = new JLabel(new ImageIcon(commonWindow.class.getResource("/common/uniLogo.png")));
 		panel_4.add(lblLogo);
 
-		frmMain.setSize(600, 311);
 	}
-
 }
